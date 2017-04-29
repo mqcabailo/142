@@ -10,6 +10,59 @@ typedef struct list{
 	struct list * next;
 } ITEM;
 
+int isValid(int x, int y, int boardSize, int** board);
+ITEM* solve(int* solution, int N);
+int * getInitialSolution(int **board, int boardSize);
+int PrintSolutions(int **board, int boardSize);
+int** newBoard(int size);
+void printBoard(int **board, int size);
+void freeBoard(int ***board, int size);
+
+int main(int argc, char const *argv[]) {
+	if(argc != 2){
+		printf("\nERROR: Invalid number of arguments!\n");
+		printf("Usage: ./<program_name> <file_name>\n");
+		return 1;
+	}
+
+	FILE *fp;
+	int ** board, i, j, x, y;
+	int numPuzzles; // number of puzzles
+	int size; 			// holder for the dimension size of a puzzle
+
+	fp = fopen(argv[1], "r");
+
+	/* Number of puzzles */
+	fscanf(fp, "%d", &numPuzzles);
+	printf("Number of puzzles: %d\n", numPuzzles);
+	/* Iterate each puzzle */
+	for(i=0; i<numPuzzles; i++){
+		/* Get puzzle size */
+		fscanf(fp, "%d", &size);
+
+		/* Allocate puzzle */
+		board = newBoard(size);
+
+		/* Initialize puzzle */
+		for (x = 0; x < size; x++) {
+			for (y = 0; y < size; y++) {
+				fscanf(fp, "%d", &(board[x][y]));
+			}
+		}
+
+		/* Solve puzzle */
+		printf("\nPuzzle #%d ------------------------------\n", i+1);
+		printBoard(board, size);
+		PrintSolutions(board, size);
+
+		/* Delete puzzle */
+		freeBoard(&board, size);
+	}
+
+  fclose(fp);
+}
+
+
 int isValid(int x, int y, int boardSize, int** board){
 	int i, n = boardSize;
 	// Rook
@@ -49,7 +102,6 @@ ITEM* solve(int* solution, int N){
 		if(nopts[row]>0){
 			row++;
 			nopts[row]=0;
-
 			// found a solution
 			if (row==N+1) {
 				// check if match with initial solution
@@ -76,7 +128,6 @@ ITEM* solve(int* solution, int N){
 					count++;
 				}
 			}
-
 			// get possible moves
 			else if(row == 1){
 				for(candidate = N; candidate >=1; candidate --) {
@@ -87,18 +138,16 @@ ITEM* solve(int* solution, int N){
 			else{
 				for(candidate=N;candidate>=1;candidate--){
 					for(i=row-1;i>=1;i--){
-						// same row
+						// rook
 						if(candidate==option[i][nopts[i]]) break;
-						// knight moves
+						// knight
 						if(candidate-2>0 && row-1>0 && candidate-2==option[row-1][nopts[row-1]]) break;
 						if(candidate-1>0 && row-2>0 && candidate-1==option[row-2][nopts[row-2]]) break;
 						if(candidate+1<=N && row-2>0 && candidate+1==option[row-2][nopts[row-2]]) break;
 						if(candidate+2<=N && row-1>0 && candidate+2==option[row-1][nopts[row-1]]) break;
 					}
-					if(!(i>=1)){
+					if(!(i>=1))
 						option[row][++nopts[row]] = candidate;
-						// printf("Inserting candidate [%d] at row [%d]\n", candidate, row);
-					}
 				}
 			}
 		}
@@ -107,14 +156,12 @@ ITEM* solve(int* solution, int N){
 			nopts[row]--;
 		}
 	}
-
 	solutionList->count = count;
 	return solutionList;
 }
 
 int * getInitialSolution(int **board, int boardSize){
 	int i, j, *solution = (int*) malloc(boardSize*sizeof(int));
-
 	for(i=0; i<boardSize; i+=1){
 		solution[i] = 0;
 		for(j=0; j<boardSize; j+=1){
@@ -159,12 +206,10 @@ int PrintSolutions(int **board, int boardSize){
 
 int** newBoard(int size){
 	int** board, i;
-
 	board = (int**) malloc(size * sizeof(int*));
 	for(i=0; i<size; i+=1){
 		board[i] = (int*) malloc(size * sizeof(int));
 	}
-
 	return board;
 }
 
@@ -184,48 +229,4 @@ void freeBoard(int ***board, int size){
 		free((*board)[i]);
 	free(*board);
 	*board = NULL;
-}
-
-int main(int argc, char const *argv[]) {
-	if(argc != 2){
-		printf("\nERROR: Invalid number of arguments!\n");
-		printf("Usage: ./<program_name> <file_name>\n");
-		return 1;
-	}
-
-	FILE *fp;
-	int ** board, i, j, x, y;
-	int numPuzzles; // number of puzzles
-	int size; 			// holder for the dimension size of a puzzle
-
-	fp = fopen(argv[1], "r");
-
-	/* Number of puzzles */
-	fscanf(fp, "%d", &numPuzzles);
-	printf("Number of puzzles: %d\n", numPuzzles);
-	/* Iterate each puzzle */
-	for(i=0; i<numPuzzles; i++){
-		/* Get puzzle size */
-		fscanf(fp, "%d", &size);
-
-		/* Allocate puzzle */
-		board = newBoard(size);
-
-		/* Initialize puzzle */
-		for (x = 0; x < size; x++) {
-			for (y = 0; y < size; y++) {
-				fscanf(fp, "%d", &(board[x][y]));
-			}
-		}
-
-		/* Solve puzzle */
-		printf("\nPuzzle #%d ------------------------------\n", i+1);
-		printBoard(board, size);
-		PrintSolutions(board, size);
-
-		/* Delete puzzle */
-		freeBoard(&board, size);
-	}
-
-  fclose(fp);
 }
