@@ -23,11 +23,15 @@ $( document ).ready(function() {
       fr.readAsText(file);
       function read() {
         let lines = fr.result.trim().split("\n");
+        if(isValidFile(lines)){
         solve(lines);
-        $('form').get(0).reset();
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs('select_tab', 'puzzle1');
-        $('.modal').modal('close');
+          $('form').get(0).reset();
+          $('ul.tabs').tabs();
+          $('ul.tabs').tabs('select_tab', 'puzzle1');
+          $('.modal').modal('close');
+        }else{
+          alert("Please observe the correct format of the file");
+        }
       }
     }
   });
@@ -110,6 +114,46 @@ $( document ).ready(function() {
       return table;
     }
 
+  }
+
+  function isValidFile(lines) {
+    //checks if the number of puzzles is valid
+    if(isNaN(lines[0]))
+      return false;
+
+    let numPuzzles = parseInt(lines[0]);
+    let numPuzzlesCounter = 0;
+
+    for(var i = 1; i < lines.length; i++){
+      //checks if the size of the puzzle is valid
+      if(isNaN(lines[i]))
+        return false;
+
+      var size = lines[i++];
+
+      //checks the puzzle row by row if there is any invalid entry
+      for(var j = 0; j < size; j++, i++){
+        var line = lines[i].trim().split(" ");
+
+        if(line.length != size)
+          return false;
+
+        //checks the character per column in the given row
+        for(var k = 0; k < size; k++)
+          if(parseInt(line[k]) != 0 && parseInt(line[k]) != 1)
+            return false;
+
+          if(j == size-1)
+            i--;
+      }
+
+      numPuzzlesCounter++;
+    }
+
+    if(numPuzzlesCounter != numPuzzles)
+      return false;
+
+    return true;
   }
 
 });
