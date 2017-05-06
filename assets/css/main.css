@@ -1,0 +1,39 @@
+body {
+  font-family: 'Roboto';
+}
+
+.game {
+  font-family: 'Press Start 2P', cursive;
+}
+
+.game-info {
+  font-family: 'Roboto Condensed';
+}
+
+#label-info {
+  font-family: 'Roboto Condensed';
+}
+
+.label-info {
+  display: block;
+  margin: auto;
+  width: 80%;
+}
+
+.play-button {
+  margin-right: 10px;
+}
+
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+    height: 50px;
+    line-height: 50px;
+}
+
+#menu {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+.section > .container {
+  margin-top: 5%;
+}

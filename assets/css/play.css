@@ -1,0 +1,45 @@
+.board-container {
+  width: 95%;
+}
+
+table.chessboard {
+  width: auto;
+  margin: 1% auto;
+  background: rgb(252, 228, 214);
+  border-collapse: collapse; /* */
+}
+td.chessboard:hover {
+  background: #ffd180 !important;
+  opacity: 0.8;
+}
+td.chessboard {
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  padding: 0;
+  border: 2px solid white; /* */
+}
+tr.chessboard:nth-child(odd) td.chessboard:nth-child(even),
+tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
+  background: rgb(237, 125, 49);
+}
+
+.range-holder {
+  display: block;
+  margin: auto;
+  width: 80%;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  background-color: orange;
+}
+input[type=range]::-moz-range-thumb {
+  background-color: orange;
+}
+input[type=range]::-ms-thumb {
+  background-color: orange;
+}
+
+.thumb {
+  background-color: orange !important;
+}

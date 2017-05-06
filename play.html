@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Play | N Chancellors Problem</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Press+Start+2P" rel="stylesheet">
+    <link rel="stylesheet" href="assets/framework/materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/play.css">
+
+  </head>
+  <body ng-app>
+    <nav class="orange lighten-1">
+      <div class="nav-wrapper">
+        <a class="brand-logo center game">Play</a>
+        <ul class="left hide-on-med-and-down">
+          <li><a href="chancellors.html" ><i class="material-icons left">view_module</i>Back to menu</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container board-container">
+    </div>
+
+
+    <a id="menu" href="#newGameModal" class="btn-floating btn-large waves-effect waves-light orange darken-3 tooltipped" data-position="left" data-delay="50" data-tooltip="New Game">
+      <i class="material-icons">play_arrow</i>
+    </a>
+
+    <!-- Tap Target Structure -->
+    <div class="tap-target orange lighten-1" data-activates="menu">
+      <div class="tap-target-content white-text">
+        <h5>Start a new game!</h5>
+        <p style="margin-bottom: -20px!important;">
+          Pick an N size board, and place N chancellors in the board such that no two
+          chancellors are on the same row, column, or on the places where they can move as a knight.
+        </p>
+      </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="newGameModal" class="modal">
+      <div class="modal-content center">
+        <br>
+        <div class="row">
+          <h4 class="game orange-text">New Game</h4>
+        </div>
+        <div class="game-info">
+          <div class="divider"></div><br>
+
+          <div class="row">
+            <form action="#" class="range-holder" ng-init="size=4">
+              <br>
+              <div class="chip" style="font-size: 2rem;">
+                  {{size}}
+              </div>
+              <span class="grey-text" style="font-size: 2rem;">
+                x
+              </span>
+              <div class="chip" style="font-size: 2rem;">
+                  {{size}}
+              </div>
+              <br>
+             <p class="range-field ">
+               <input ng-model="size" id="size" class="orange" type="range" min="1" max="20"/>
+             </p>
+             <h5>Board Size</h5>
+            </form>
+          </div>
+          <div class="divider"></div><br>
+          <a id="startGame" class="btn waves-effect waves-light orange game pulse">
+            Start Game
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/framework/jquery/jquery.min.js" charset="utf-8"></script>
+    <script src="assets/framework/angular/angular.min.js" charset="utf-8"></script>
+    <script src="assets/framework/materialize/js/materialize.min.js" charset="utf-8"></script>
+    <script src="assets/js/play.js" charset="utf-8"></script>
+  </body>
+</html>
