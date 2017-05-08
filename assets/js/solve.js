@@ -23,14 +23,40 @@ $( document ).ready(function() {
       fr.readAsText(file);
       function read() {
         let lines = fr.result.trim().split("\n");
-        solve(lines);
-        $('form').get(0).reset();
-        $('ul.tabs').tabs();
-        $('ul.tabs').tabs('select_tab', 'puzzle1');
-        $('.modal').modal('close');
+        var lines_temp = lines.slice(0);
+        if(verifyFile(lines_temp)){
+          solve(lines);
+          $('form').get(0).reset();
+          $('ul.tabs').tabs();
+          $('ul.tabs').tabs('select_tab', 'puzzle1');
+          $('.modal').modal('close');
+        }
+        else{
+          alert("Format was not followed. Please refer to guide."); return;
+        }
       }
     }
   });
+
+  function verifyFile(lines) {
+    var numPuzzles = parseInt(lines.splice(0, 1));
+    var i, temp, temp_line;
+
+    while(numPuzzles){
+      if(numPuzzles > 0 && lines.length == 0) return false;
+
+      temp = parseInt(lines.splice(0, 1));
+      for(i = 0; i < temp; i++){
+        temp_line = (String(lines.splice(0, 1))).split(" ");
+        if(temp_line.length != temp){
+          return false;
+        }
+      }
+      numPuzzles--;
+    }
+    if(lines.length > 0) return false;
+    return true;
+  }
 
   function solve(lines) {
     let numPuzzles = parseInt(lines.splice(0, 1));
