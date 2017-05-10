@@ -57,7 +57,7 @@
             if(board[i][j] == 0)
               table += '<td class="chessboard"></td>';
             else
-              table += '<td class="chessboard center">C</td>';
+              table += '<td class="chessboard center"><i class="material-icons">android</i></td>';
           }
           table += '</tr>';
         }
