@@ -12,8 +12,20 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/solve.css">
 
+    <script src="assets/framework/jquery/jquery.min.js" charset="utf-8"></script>
+    <script src="assets/framework/materialize/js/materialize.min.js" charset="utf-8"></script>
+    <script src="assets/framework/angular/angular.min.js" charset="utf-8"></script>
+    <script src="assets/framework/angularUtils-pagination/dirPagination.js" charset="utf-8"></script>
+    <script src="assets/framework/angular-filereader/angular-filereader.min.js" charset="utf-8"></script>
+    <script src="assets/framework/angular-sanitize/angular-sanitize.min.js" charset="utf-8"></script>
+    <script src="assets/framework/ng-file-upload/ng-file-upload.min.js" charset="utf-8"></script>
+
+    <script src="assets/app/app.js" charset="utf-8"></script>
+    <script src="assets/app/solve.ctrl.js" charset="utf-8"></script>
+    <script src="assets/app/utils.srvc.js" charset="utf-8"></script>
+    <script src="assets/app/backtrack.srvc.js" charset="utf-8"></script>
   </head>
-  <body ng-app>
+  <body ng-app="NChancellorsApp" ng-controller="SolveCtrl">
     <nav class="orange lighten-1">
       <div class="nav-wrapper">
         <a class="brand-logo center game">Solver</a>
@@ -23,8 +35,35 @@
       </div>
     </nav>
     <br>
-      <div id="results" class="row">
+
+    <div class="row" ng-show="puzzles.length>0">
+      <div class="col s12">
+        <ul class="tabs tabs-fixed-width">
+          <li class="tab" ng-repeat="puzzle in puzzles track by $index" ng-cloak>
+            <a class="orange-text" ng-href="#puzzle{{$index}}">
+              Puzzle #{{$index+1}}
+            </a>
+          </li>
+        </ul>
       </div>
+      <div ng-repeat="puzzle in puzzles track by $index" id="puzzle{{$index}}" class="col s12 center hidden" ng-cloak>
+        <div ng-bind-html="puzzle.initBoardHTML">
+        </div>
+        <div class="divider"></div>
+          <h4 class="grey-text flow-text" ng-if="puzzle.solutions.length > 0">{{puzzle.solutions.length}} solutions</h4>
+
+          <div ng-if="puzzle.solutions.length <= 0">
+            <br/><br/><h3 class="grey-text flow-text center"> No solutions for this board! </h3>
+          </div>
+
+          <div class="container center" ng-init="id='hello'">
+            <dir-pagination-controls on-page-change="scrollTop()" pagination-id="puzzle.id"></dir-pagination-controls>
+          </div>
+          <div dir-paginate="solution in puzzle.solutions | itemsPerPage: 20" pagination-id="puzzle.id" ng-bind-html="solution" style="display: inline-block">
+          </div>
+      </div>
+    </div>
+
     <a id="menu" href="#uploadFile" class="btn-floating btn-large waves-effect waves-light orange darken-3 tooltipped" data-position="left" data-delay="50" data-tooltip="Upload File">
       <i class="material-icons">input</i>
     </a>
@@ -42,11 +81,29 @@
 
     <div id="uploadFile" class="modal" style="max-height: 80%;">
       <div class="modal-content center">
+        <div class="loading" ng-if="generatingSolutions">
+          <div class="row">
+            <div class="preloader-wrapper big active">
+              <div class="spinner-layer spinner-yellow-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            Generating solutions...
+          </div>
+        </div>
         <br>
         <div class="row">
           <h4 class="game orange-text">Solver</h4>
         </div>
-        <div class="game-info">
+        <div class="game-info" ng-class="{'invisible' : generatingSolutions}">
           <div class="divider"></div><br>
           <div class="row">
               <blockquote class="left-align" style="border-left: 5px solid #f57c00;">
@@ -75,30 +132,25 @@
                   </div>
                 </div>
               </blockquote>
-              <form action="#">
+              <form>
                   <div class="file-field input-field">
                     <div class="btn orange lighten-1">
                       <span>File</span>
-                      <input id="file_input" type="file" accept=".in">
+                      <input type="file" accept=".in" ngf-select="" ng-model="inputFile" name="file" ngf-accept="'.in'" required="">
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">
                     </div>
                   </div>
-                </form>
+                  <a class="btn waves-effect waves-light orange game pulse" ng-click="GetSolutions(inputFile)">
+                    Get Solutions
+                  </a>
+              </form>
           </div>
-          <div class="divider"></div><br>
-          <a id="getSolution" class="btn waves-effect waves-light orange game pulse">
-            Get Solutions
-          </a>
         </div>
       </div>
     </div>
 
-    <script src="assets/framework/jquery/jquery.min.js" charset="utf-8"></script>
-    <script src="assets/framework/angular/angular.min.js" charset="utf-8"></script>
-    <script src="assets/framework/materialize/js/materialize.min.js" charset="utf-8"></script>
-    <script src="assets/js/backtracking.js" charset="utf-8"></script>
-    <script src="assets/js/solve.js" charset="utf-8"></script>
+
   </body>
 </html>

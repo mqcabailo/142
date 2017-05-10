@@ -135,7 +135,6 @@ $( document ).ready(function() {
       table += '</table>';
       return table;
     }
-
   }
 
 });
