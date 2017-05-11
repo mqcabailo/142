@@ -9,6 +9,7 @@
   function BackTrack() {
     var service = {};
     service.NewBoard = NewBoard;
+    service.CheckMove = CheckMove;
     service.Valid = Valid;
     service.GetInitialBoard = GetInitialBoard;
     service.SolveChancellors = SolveChancellors;
@@ -25,25 +26,31 @@
       return board;
     }
 
+    function CheckMove(x, y, board) {
+      // Rook
+      for(let i=0; i<board.length; i+=1){
+        if ((i!=y && board[x][i]==1) || (i!=x && board[i][y]==1)) {
+          return false;
+        }
+      }
+      // Knight
+      if(x+1<board.length  && y+2<board.length  && board[x+1][y+2]==1) return false;
+      if(x+1<board.length  && y-2>=0 && board[x+1][y-2]==1) return false;
+      if(x-1>=0 && y+2<board.length  && board[x-1][y+2]==1) return false;
+      if(x-1>=0 && y-2>=0 && board[x-1][y-2]==1) return false;
+      if(x+2<board.length  && y+1<board.length  && board[x+2][y+1]==1) return false;
+      if(x+2<board.length  && y-1>=0 && board[x+2][y-1]==1) return false;
+      if(x-2>=0 && y+1<board.length  && board[x-2][y+1]==1) return false;
+      if(x-2>=0 && y-1>=0 && board[x-2][y-1]==1) return false;
+
+      return true;
+    }
+
     function Valid(board) {
       for(let x=0; x<board.length; x+=1){
         for(let y=0; y<board.length; y+=1){
-          if(board[x][y] == 1){
-            // Rook
-            for(let i=0; i<board.length; i+=1){
-              if ((i!=y && board[x][i]==1) || (i!=x && board[i][y]==1)) {
-                return false;
-              }
-            }
-            // Knight
-            if(x+1<board.length  && y+2<board.length  && board[x+1][y+2]==1) return false;
-            if(x+1<board.length  && y-2>=0 && board[x+1][y-2]==1) return false;
-            if(x-1>=0 && y+2<board.length  && board[x-1][y+2]==1) return false;
-            if(x-1>=0 && y-2>=0 && board[x-1][y-2]==1) return false;
-            if(x+2<board.length  && y+1<board.length  && board[x+2][y+1]==1) return false;
-            if(x+2<board.length  && y-1>=0 && board[x+2][y-1]==1) return false;
-            if(x-2>=0 && y+1<board.length  && board[x-2][y+1]==1) return false;
-            if(x-2>=0 && y-1>=0 && board[x-2][y-1]==1) return false;
+          if(board[x][y] == 1 && !CheckMove(x, y, board)){
+            return false;
           }
         }
       }
@@ -64,7 +71,7 @@
       return initialSolution;
     }
 
-    function SolveChancellors(board){
+    function SolveChancellors(board, single){
       let start = 0, row = 0;
       let nopts = [];
       let option = NewBoard(board.length+2);
@@ -86,7 +93,8 @@
               for (i = 1; i < row; i++) {
                 solution.push(option[i][nopts[i]]);
               }
-              solutionList.push(solution);
+              if(single) return solution;
+              else  solutionList.push(solution);
             }
           }
           /* Get possible moves for first row */

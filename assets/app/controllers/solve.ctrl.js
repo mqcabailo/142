@@ -37,7 +37,6 @@
               $('.modal').modal('close');
               $scope.generatingSolutions = false;
             }, 1000);
-
           }
           else{
             Materialize.toast('Format was not followed. Please refer to guide.', 4000);
@@ -58,10 +57,6 @@
         console.log(text);
         return text;
       }
-    }
-
-    function ShowSolutions(solutions) {
-      $scope.puzzles = solutions;
     }
   }
 })();

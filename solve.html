@@ -21,15 +21,15 @@
     <script src="assets/framework/ng-file-upload/ng-file-upload.min.js" charset="utf-8"></script>
 
     <script src="assets/app/app.js" charset="utf-8"></script>
-    <script src="assets/app/solve.ctrl.js" charset="utf-8"></script>
-    <script src="assets/app/utils.srvc.js" charset="utf-8"></script>
-    <script src="assets/app/backtrack.srvc.js" charset="utf-8"></script>
+    <script src="assets/app/controllers/solve.ctrl.js" charset="utf-8"></script>
+    <script src="assets/app/services/utils.srvc.js" charset="utf-8"></script>
+    <script src="assets/app/services/backtrack.srvc.js" charset="utf-8"></script>
   </head>
   <body ng-app="NChancellorsApp" ng-controller="SolveCtrl">
     <nav class="orange lighten-1">
       <div class="nav-wrapper">
         <a class="brand-logo center game">Solver</a>
-        <ul class="left hide-on-med-and-down">
+        <ul class="left">
           <li><a href="chancellors.html" ><i class="material-icons left">view_module</i>Back to menu</a></li>
         </ul>
       </div>
@@ -49,8 +49,9 @@
       <div ng-repeat="puzzle in puzzles track by $index" id="puzzle{{$index}}" class="col s12 center hidden" ng-cloak>
         <div ng-bind-html="puzzle.initBoardHTML">
         </div>
+        <h5 class="game">Initial Board</h5>
         <div class="divider"></div>
-          <h4 class="grey-text flow-text" ng-if="puzzle.solutions.length > 0">{{puzzle.solutions.length}} solutions</h4>
+          <h4 class="grey-text flow-text" ng-if="puzzle.solutions.length > 0">{{puzzle.solutions.length}} solution{{puzzle.solutions.length>1?'s':''}}</h4>
 
           <div ng-if="puzzle.solutions.length <= 0">
             <br/><br/><h3 class="grey-text flow-text center"> No solutions for this board! </h3>

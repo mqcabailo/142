@@ -24,7 +24,7 @@ body {
   margin-right: 10px;
 }
 
-nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+nav.true-nav, nav.true-nav .nav-wrapper i, nav.true-nav a.button-collapse, nav.true-nav a.button-collapse i {
     height: 50px;
     line-height: 50px;
 }

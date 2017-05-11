@@ -70,14 +70,12 @@
     function solve(lines) {
       let puzzles = [];
       let numPuzzles = parseInt(lines.splice(0, 1));
-
       for (let i = 0; i < numPuzzles; i++) {
         let puzzle = {
           id: 'upgrade'+i,
           initBoardHTML: '',
           solutions: []
         };
-
         let board = [], dimension = parseInt(lines.splice(0, 1));
         for (let j = 0; j < dimension; j++) {
           let row = lines.splice(0, 1).toString();
@@ -85,16 +83,13 @@
           for(let k=0; k<row.length; k++) row[i] = +row[i];
           board[j] = row;
         }
-
         puzzle.initBoardHTML = generateBoard(board);
-
         if(BackTrack.Valid(board)){
           let solutions = BackTrack.SolveChancellors(BackTrack.GetInitialBoard(board));
           for (let index in solutions) {
             puzzle.solutions.push(generateBoard(solutions[index], true));
           }
         }
-
         puzzles.push(puzzle);
       }
       return puzzles;

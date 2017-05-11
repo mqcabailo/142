@@ -19,6 +19,10 @@ td.chessboard {
   padding: 0;
   border: 2px solid white; /* */
 }
+td.chessboard > i {
+  color: black;
+  vertical-align: middle;
+}
 tr.chessboard:nth-child(odd) td.chessboard:nth-child(even),
 tr.chessboard:nth-child(even) td.chessboard:nth-child(odd) {
   background: rgb(237, 125, 49);
@@ -43,3 +47,37 @@ input[type=range]::-ms-thumb {
 .thumb {
   background-color: orange !important;
 }
+
+nav.game-nav {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: none;
+}
+
+nav.game-nav > div {
+  border: 2px groove orange;
+  border-radius: 5px;
+}
+
+.game-toast {
+  position: fixed;
+  top: 165px;
+  right: 10px;
+}
+
+/* label focus color */
+  .input-field input[type=text]:focus + label {
+    color: orange;
+  }
+  /* label underline focus color */
+  .input-field input[type=text]:focus {
+    border-bottom: 1px solid orange;
+    -webkit-box-shadow: 0 1px 0 0 orange;
+            box-shadow: 0 1px 0 0 orange;
+  }
+
+  .modal.bottom-sheet {
+    max-height: 55%;
+  }

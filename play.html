@@ -12,24 +12,93 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/play.css">
 
+    <script src="assets/framework/jquery/jquery.min.js" charset="utf-8"></script>
+    <script src="assets/framework/materialize/js/materialize.min.js" charset="utf-8"></script>
+    <script src="assets/framework/angular/angular.min.js" charset="utf-8"></script>
+    <script src="assets/framework/angularUtils-pagination/dirPagination.js" charset="utf-8"></script>
+    <script src="assets/framework/angular-filereader/angular-filereader.min.js" charset="utf-8"></script>
+    <script src="assets/framework/angular-sanitize/angular-sanitize.min.js" charset="utf-8"></script>
+    <script src="assets/framework/ng-file-upload/ng-file-upload.min.js" charset="utf-8"></script>
+
+    <script src="assets/app/app.js" charset="utf-8"></script>
+    <script src="assets/app/controllers/play.ctrl.js" charset="utf-8"></script>
+    <script src="assets/app/services/utils.srvc.js" charset="utf-8"></script>
+    <script src="assets/app/services/backtrack.srvc.js" charset="utf-8"></script>
   </head>
-  <body ng-app>
-    <nav class="orange lighten-1">
+  <body ng-app="NChancellorsApp" ng-controller="PlayCtrl">
+    <nav class="true-nav orange lighten-1">
       <div class="nav-wrapper">
         <a class="brand-logo center game">Play</a>
-        <ul class="left hide-on-med-and-down">
+        <ul class="left">
           <li><a href="chancellors.html" ><i class="material-icons left">view_module</i>Back to menu</a></li>
         </ul>
       </div>
     </nav>
 
-    <div class="container board-container">
+    <div ng-cloak ng-show="puzzle.length > 0">
+      <br>
+      <nav class="game-nav game">
+       <div class="nav-wrapper white">
+           <span class="brand-logo center orange-text" ng-cloak>
+               {{timer}}
+               <i class="material-icons right">query_builder</i>
+           </span>
+           <ul id="nav-mobile" class="left">
+             <li>
+               <a class="orange-text" ng-cloak>
+                 {{playerName}}
+               </a>
+             </li>
+           </ul>
+           <ul id="nav-mobile" class="right">
+             <li>
+               <a class="orange-text">
+                 <i class="material-icons right small">android</i> {{chancellorsLeft}}
+               </a>
+             </li>
+             <li>
+               <a class="orange-text tooltipped" data-position="bottom" data-delay="40" data-tooltip="Show solution" style="font-size: 10px;" ng-click="ShowSolution()">
+                 Need help?
+               </a>
+             </li>
+           </ul>
+         </div>
+       </nav>
+       <br>
     </div>
 
+
+    <div class="container board-container" compile="boardHTML">
+    </div>
+    <br><br>
 
     <a id="menu" href="#newGameModal" class="btn-floating btn-large waves-effect waves-light orange darken-3 tooltipped" data-position="left" data-delay="50" data-tooltip="New Game">
       <i class="material-icons">play_arrow</i>
     </a>
+
+    <!-- Solution Modal -->
+    <div id="solutionModal" class="modal bottom-sheet">
+      <div class="modal-content center">
+        <div class="container" style="width:95%;">
+          <div class="col s12">
+            <span class="flow-text">Solution</span>
+            <a class="right modal-action modal-close black-text" style="font-size: 2.0rem;">&times;</a>
+          </div>
+          </div>
+
+        <div ng-if="generatingSolution">
+          <br>
+          <div class="progress" style="width:70%; display:block; margin:auto">
+            <div class="indeterminate orange"></div>
+          </div>
+          <br>
+          Generating Solutions
+        </div>
+
+        <div class="container board-container" compile="solutionHTML" ng-hide="generatingSolution">
+        </div>
+      </div>
+    </div>
 
     <!-- Tap Target Structure -->
     <div class="tap-target orange lighten-1" data-activates="menu">
@@ -42,7 +111,7 @@
       </div>
     </div>
 
-    <!-- Modal Structure -->
+    <!-- New game modal -->
     <div id="newGameModal" class="modal">
       <div class="modal-content center">
         <br>
@@ -55,6 +124,7 @@
           <div class="row">
             <form action="#" class="range-holder" ng-init="size=4">
               <br>
+              <span style="font-size: 2rem; opacity:0.7;">Board Size: </span>
               <div class="chip" style="font-size: 2rem;">
                   {{size}}
               </div>
@@ -68,20 +138,22 @@
              <p class="range-field ">
                <input ng-model="size" id="size" class="orange" type="range" min="1" max="20"/>
              </p>
-             <h5>Board Size</h5>
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input ng-model="name" id="name" type="text" class="validate" required>
+                <label for="name">Player Name</label>
+              </div>
+            </div>
+             <br>
+             <a ng-click="NewGame(size, name)" class="btn waves-effect waves-light orange game pulse">
+               Start Game
+             </a>
             </form>
           </div>
-          <div class="divider"></div><br>
-          <a id="startGame" class="btn waves-effect waves-light orange game pulse">
-            Start Game
-          </a>
+
         </div>
       </div>
     </div>
-
-    <script src="assets/framework/jquery/jquery.min.js" charset="utf-8"></script>
-    <script src="assets/framework/angular/angular.min.js" charset="utf-8"></script>
-    <script src="assets/framework/materialize/js/materialize.min.js" charset="utf-8"></script>
-    <script src="assets/js/play.js" charset="utf-8"></script>
   </body>
 </html>
