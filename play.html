@@ -67,12 +67,11 @@
        <br>
     </div>
 
-
     <div class="container board-container" compile="boardHTML">
     </div>
     <br><br>
 
-    <a id="menu" href="#newGameModal" class="btn-floating btn-large waves-effect waves-light orange darken-3 tooltipped" data-position="left" data-delay="50" data-tooltip="New Game">
+    <a id="menu" href="#" ng-click="new()" class="btn-floating btn-large waves-effect waves-light orange darken-3 tooltipped" data-position="left" data-delay="50" data-tooltip="New Game">
       <i class="material-icons">play_arrow</i>
     </a>
 
@@ -139,12 +138,24 @@
                <input ng-model="size" id="size" class="orange" type="range" min="1" max="20"/>
              </p>
 
-            <div class="row">
-              <div class="input-field col s12">
-                <input ng-model="name" id="name" type="text" class="validate" required>
-                <label for="name">Player Name</label>
-              </div>
-            </div>
+             <div class="row">
+               <div class="input-field col s12">
+                 <input ng-model="name" id="name" type="text" class="validate" required>
+                 <label for="name">Player Name</label>
+               </div>
+             </div>
+             <div class="switch left">
+               &nbsp;
+               &nbsp;
+               Guides : &nbsp;&nbsp;
+               <label style="font-size: 1rem;">
+                 No (Difficult)
+                 <input type="checkbox" ng-model="guides">
+                 <span class="lever"></span>
+                 Yes (Easy)
+               </label>
+             </div>
+             <br>
              <br>
              <a ng-click="NewGame(size, name)" class="btn waves-effect waves-light orange game pulse">
                Start Game

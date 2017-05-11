@@ -37,6 +37,7 @@
     $scope.puzzle = [];
     $scope.playerName = '';
     $scope.chancellorsLeft = 0;
+    $scope.guides = false;
     $scope.timer = 0;
     $scope.boardHTML = '';
     $scope.solutionHTML = '';
@@ -59,17 +60,12 @@
         table += '<tr class="chessboard">';
 
         for (var j = 0; j < size; j++) {
-          table += '<td class="chessboard center white-text flow-text" ng-click="placeChancellor('+i+','+j+', $event)"></td>';
+          table += '<td class="chessboard center white-text flow-text lighten-2" id="'+i+'-'+j+'" ng-click="placeChancellor('+i+','+j+', $event)"></td>';
         }
         table += '</tr>';
       }
       table += '</table>';
-
       $scope.boardHTML = table;
-      $scope.solutionHTML = '';
-      $scope.name = '';
-      $scope.size = 4;
-      angular.element('form').get(0).reset();
       angular.element('.modal').modal('close');
 
       /*
@@ -98,13 +94,20 @@
         $scope.puzzle[i][j] = 1;
         $event.currentTarget.innerHTML = chancellor;
         $scope.chancellorsLeft--;
+        // darken affected tiles
+        if($scope.guides) toggleTiles(i, j, 'darken');
       }
       else {
         $scope.puzzle[i][j] = 0;
         $event.currentTarget.innerHTML = '';
         $scope.chancellorsLeft++;
+        // lighten affected tiles
+        if($scope.guides) toggleTiles(i, j, 'lighten');
       }
 
+
+
+      // current board in console
       let print = '';
       for (let x=0; x<$scope.puzzle.length; x+=1) {
         for (let y=0; y<$scope.puzzle.length; y+=1){
@@ -116,7 +119,58 @@
       /*
         Check here if player has won, get time
       */
-
     }
+
+    $scope.new = function () {
+      if($scope.boardHTML.trim()!=''){
+        if(!confirm('Your current game will be lost. Proceed?')){
+          return;
+        }
+      }
+      
+      angular.element('form').get(0).reset();
+      $scope.solutionHTML = '';
+      $scope.puzzle = [];
+      $scope.boardHTML = '';
+      $scope.name = '';
+      $scope.size = 4;
+      $scope.guides = false;
+      angular.element('#newGameModal').modal('open');
+    }
+
+    function darken(x, y) {
+      let tile = angular.element('td.chessboard#'+x+'-'+y);
+      if(!tile.attr('hits'))
+        tile.attr('hits', "0");
+
+      tile.attr('hits', parseInt(tile.attr('hits')) + 1);
+    }
+
+    function lighten(x, y) {
+      let tile = angular.element('td.chessboard#'+x+'-'+y);
+      tile.attr('hits', parseInt(tile.attr('hits')) - 1);
+
+      if(parseInt(tile.attr('hits')) <= 0){
+        tile.removeAttr('hits');
+      }
+    }
+
+    function toggleTiles(x, y, option) {
+      let foo = (option == 'darken');
+      for(let i=0; i<$scope.puzzle.length; i+=1){
+        if (x+'-'+y != x+'-'+i) foo? darken(x, i) : lighten(x, i);
+        if (x+'-'+y != i+'-'+y) foo? darken(i, y) : lighten(i, y);
+      }
+      // Knight
+      if(x+1<$scope.puzzle.length  && y+2<$scope.puzzle.length ) foo? darken(x+1, y+2) : lighten(x+1, y+2);
+      if(x+1<$scope.puzzle.length  && y-2>=0) foo? darken(x+1, y-2) : lighten(x+1, y-2);
+      if(x-1>=0 && y+2<$scope.puzzle.length ) foo? darken(x-1, y+2) : lighten(x-1, y+2);
+      if(x-1>=0 && y-2>=0) foo? darken(x-1, y-2) : lighten(x-1, y-2);
+      if(x+2<$scope.puzzle.length  && y+1<$scope.puzzle.length ) foo? darken(x+2, y+1) : lighten(x+2, y+1);
+      if(x+2<$scope.puzzle.length  && y-1>=0) foo? darken(x+2, y-1) : lighten(x+2, y-1);
+      if(x-2>=0 && y+1<$scope.puzzle.length ) foo? darken(x-2, y+1) : lighten(x-2, y+1);
+      if(x-2>=0 && y-1>=0) foo? darken(x-2, y-1) : lighten(x-2, y-1);
+    }
+
   }
 })();

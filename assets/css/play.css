@@ -81,3 +81,15 @@ nav.game-nav > div {
   .modal.bottom-sheet {
     max-height: 55%;
   }
+
+  td[hits] {
+    background-color: #616161 !important;
+  }
+
+  .switch label input[type=checkbox]:checked+.lever:after{
+    background-color: orange;
+  }
+  span.lever {
+    background-color: #ffcc80 !important;
+  }
+}
