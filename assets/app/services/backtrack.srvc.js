@@ -89,6 +89,7 @@
             for(i=0; i<board.length ;i++){
     					if(board[i]!=0 && board[i]!=option[i+1][nopts[i+1]]) break;
     				}
+            // matches initial board
             if(i == board.length){
               for (i = 1; i < row; i++) {
                 solution.push(option[i][nopts[i]]);
