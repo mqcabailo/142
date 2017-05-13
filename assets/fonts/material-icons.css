@@ -6,6 +6,11 @@
   src: local('Material Icons'), local('MaterialIcons-Regular'), url(material-icons.woff2) format('woff2');
 }
 
+@font-face {
+  font-family: Body;
+  src: url("Pokemon GB.ttf");
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;

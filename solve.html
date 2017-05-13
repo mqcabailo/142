@@ -29,8 +29,8 @@
   </head>
   <body ng-app="NChancellorsApp" ng-controller="SolveCtrl">
     <nav class="orange lighten-1">
-      <div class="nav-wrapper">
-        <a class="brand-logo center game">Solver</a>
+      <div class="nav-wrapper header">
+        <div class="brand-logo center game">Solver</div>
         <ul class="left">
           <li><a href="chancellors.html" ><i class="material-icons left">view_module</i>Back to menu</a></li>
         </ul>
@@ -67,12 +67,12 @@
       </div>
     </div>
 
-    <a id="menu" href="#uploadFile" class="btn-floating btn-large waves-effect waves-light orange darken-3 tooltipped" data-position="left" data-delay="50" data-tooltip="Upload File">
+    <a id="menu" href="#uploadFile" class="btn-floating btn-large waves-effect waves-light game tooltipped" data-position="left" data-delay="50" data-tooltip="Upload File">
       <i class="material-icons">input</i>
     </a>
 
     <!-- Tap Target Structure -->
-    <div class="tap-target orange lighten-1" data-activates="menu">
+    <div class="tap-target" data-activates="menu">
       <div class="tap-target-content white-text">
         <h5>Upload a file!</h5>
         <p>
@@ -145,7 +145,7 @@
                       <input class="file-path validate" type="text">
                     </div>
                   </div>
-                  <a class="btn waves-effect waves-light orange game pulse" ng-click="GetSolutions(inputFile)">
+                  <a class="btn waves-effect waves-light game pulse" ng-click="GetSolutions(inputFile)">
                     Get Solutions
                   </a>
               </form>

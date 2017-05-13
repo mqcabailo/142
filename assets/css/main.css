@@ -1,9 +1,48 @@
-body {
-  font-family: 'Roboto';
+html{
+  height: 100%;
 }
 
-.game {
+body#main{
+  height: 100%;
+  flex: 1 0 auto;
+  background: url('../img/bg3.gif') no-repeat center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.label-info {
+  font-family: 'Body';
+  font-size: 15px;
+  line-height: 120%;
+}
+
+h1.game {
   font-family: 'Press Start 2P', cursive;
+  color: #5F5547;
+  text-shadow:
+    2px 2px 0 #E6E4E1,
+    1px 1px 0 #E6E4E1,
+    -1px -1px 0 #E6E4E1,
+    2px 2px 0 #E6E4E1;
+}
+
+a.game {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #5F5547;
+}
+
+a.game:hover {
+  background-color: #0F0D0A;
+}
+
+div.game{
+  font-family: 'Press Start 2P', cursive;
+}
+
+div.header{
+    background-color: #5F5547;
 }
 
 .game-info {
@@ -36,4 +75,8 @@ nav.true-nav, nav.true-nav .nav-wrapper i, nav.true-nav a.button-collapse, nav.t
 }
 .section > .container {
   margin-top: 5%;
+}
+
+.tap-target{
+  background-color: #5F5547;
 }

@@ -29,8 +29,8 @@
   </head>
   <body ng-app="NChancellorsApp" ng-controller="PlayCtrl">
     <nav class="true-nav orange lighten-1">
-      <div class="nav-wrapper">
-        <a class="brand-logo center game">Play</a>
+      <div class="nav-wrapper header">
+        <div class="brand-logo center game">Play</div>
         <ul class="left">
           <li><a href="chancellors.html" ><i class="material-icons left">view_module</i>Back to menu</a></li>
         </ul>
@@ -73,7 +73,7 @@
     </div>
     <br><br>
 
-    <a id="menu" href="#" ng-click="new()" class="btn-floating btn-large waves-effect waves-light orange darken-3 tooltipped" data-position="left" data-delay="50" data-tooltip="New Game">
+    <a id="menu" href="#" ng-click="new()" class="btn-floating btn-large waves-effect waves-light game tooltipped" data-position="left" data-delay="50" data-tooltip="New Game">
       <i class="material-icons">play_arrow</i>
     </a>
 
@@ -102,7 +102,7 @@
     </div>
 
     <!-- Tap Target Structure -->
-    <div class="tap-target orange lighten-1" data-activates="menu">
+    <div class="tap-target" data-activates="menu">
       <div class="tap-target-content white-text">
         <h5>Start a new game!</h5>
         <p style="margin-bottom: -20px!important;">
@@ -159,7 +159,7 @@
              </div>
              <br>
              <br>
-             <a ng-click="NewGame(size, name)" class="btn waves-effect waves-light orange game pulse">
+             <a ng-click="NewGame(size, name)" class="btn waves-effect waves-light game pulse">
                Start Game
              </a>
             </form>
