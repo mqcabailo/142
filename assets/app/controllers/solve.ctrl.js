@@ -19,6 +19,7 @@
     * Scope Functions
     ******************************************************/
     /* Solve board puzzles inside 'file' */
+
     $scope.GetSolutions = function (file) {
       if(!file){
         Materialize.toast('No file uploaded!', 4000);
@@ -59,4 +60,14 @@
       }
     }
   }
+
+  $(document).ready(function() {
+    $('.modal').modal();
+  });
+
+  $(document).on('click', '.tableSolutions', function (content) {
+    $("#modalContent").html($(content.target).closest("table").html());
+    $("#modalTable").modal('open');
+  });
+
 })();

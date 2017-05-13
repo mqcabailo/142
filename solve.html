@@ -62,8 +62,15 @@
           <div class="container center" ng-init="id='hello'">
             <dir-pagination-controls on-page-change="scrollTop()" pagination-id="puzzle.id"></dir-pagination-controls>
           </div>
-          <div dir-paginate="solution in puzzle.solutions | itemsPerPage: 20" pagination-id="puzzle.id" ng-bind-html="solution" style="display: inline-block">
+          <div dir-paginate="solution in puzzle.solutions | itemsPerPage: 20" pagination-id="puzzle.id" ng-bind-html="solution" style="display: inline-block" id="table-container">
           </div>
+      </div>
+    </div>
+
+    <div id="modalTable" class="modal">
+      <div class="modal-content" id="modalContainer">
+        <table id="modalContent" class="chessboard hoverable solution">
+        </table>
       </div>
     </div>
 
@@ -137,9 +144,9 @@
               </blockquote>
               <form>
                   <div class="file-field input-field">
-                    <div class="btn orange lighten-1">
+                    <div class="btn lighten-1">
                       <span>File</span>
-                      <input type="file" accept=".in" ngf-select="" ng-model="inputFile" name="file" ngf-accept="'.in'" required="">
+                      <input type="file" accept=".in" ngf-select="" ng-model="inputFile" name="file" ngf-accept="'.in'" required="" >
                     </div>
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text">

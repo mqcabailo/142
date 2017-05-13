@@ -35,7 +35,7 @@
     // generates html table
     function generateBoard(board, isSolution) {
       if(isSolution){
-        let table = '<table class="chessboard hoverable solution" style="display: inline-block;">';
+        let table = '<a class="tableSolutions" href="#table-container"><table class="chessboard hoverable solution" style="display: inline-block;">';
         for (var i = 0; i < board.length; i++) {
           table += '<tr class="chessboard">';
           for (var j = 0; j < board.length; j++) {
@@ -46,7 +46,7 @@
           }
           table += '</tr>';
         }
-        table += '</table>';
+        table += '</table></a>';
         return table;
       }
       else{

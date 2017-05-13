@@ -39,3 +39,19 @@ td.chessboard > i {
 .invisible {
   opacity: 0;
 }
+
+a.tableSolutions{
+  color: inherit;
+}
+
+#modalTable{
+  width: 35vw;
+  height: 35vw;
+}
+
+#modalContent{
+  table-layout:fixed;
+  border-collapse: collapse;
+  width: 30vw;
+  height: 30vw;
+}
