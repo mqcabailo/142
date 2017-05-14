@@ -24,9 +24,9 @@
     };
   }]);
 
-  PlayCtrl.$inject = ['$scope', 'Utils', 'FileReader', '$timeout', 'BackTrack'];
+  PlayCtrl.$inject = ['$scope', 'Utils', 'FileReader', '$timeout', 'BackTrack', '$interval'];
 
-  function PlayCtrl($scope, Utils, FileReader, $timeout, BackTrack) {
+  function PlayCtrl($scope, Utils, FileReader, $timeout, BackTrack, $interval) {
     angular.element('.modal').modal();
     angular.element('.tap-target').tapTarget('open');
 
@@ -38,7 +38,9 @@
     $scope.playerName = '';
     $scope.chancellorsLeft = 0;
     $scope.guides = false;
-    $scope.timer = 0;
+    $scope.timer;
+    $scope.time = 0;
+    $scope.end = false;
     $scope.boardHTML = '';
     $scope.solutionHTML = '';
 
@@ -71,6 +73,16 @@
       /*
         Start Timer here
       */
+      $scope.timer = $interval(function(){
+        if(!$scope.end)
+          $scope.time+=1;
+        else{
+          $scope.$on("$destroy", function(){
+            $interval.cancel(timer);
+            $scope.timer = undefined;
+          });
+        }
+      }, 1000);
     }
 
     $scope.ShowSolution = function () {
@@ -119,6 +131,9 @@
       /*
         Check here if player has won, get time
       */
+      if(gameOver()){
+        $scope.end = true;
+      }
     }
 
     $scope.new = function () {
@@ -170,6 +185,18 @@
       if(x+2<$scope.puzzle.length  && y-1>=0) foo? darken(x+2, y-1) : lighten(x+2, y-1);
       if(x-2>=0 && y+1<$scope.puzzle.length ) foo? darken(x-2, y+1) : lighten(x-2, y+1);
       if(x-2>=0 && y-1>=0) foo? darken(x-2, y-1) : lighten(x-2, y-1);
+    }
+
+    function gameOver(){
+      for (let x=0; x<$scope.puzzle.length; x+=1) {
+        for (let y=0; y<$scope.puzzle.length; y+=1){
+          if($scope.puzzle[x][y] == 1)
+            break;
+          if($scope.puzzle[x][y] == 0 && y == $scope.puzzle.length - 1)
+            return false;            
+        }
+      }
+      return true;
     }
 
   }
