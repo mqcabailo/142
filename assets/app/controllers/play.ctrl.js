@@ -73,16 +73,7 @@
       /*
         Start Timer here
       */
-      $scope.timer = $interval(function(){
-        if(!$scope.end)
-          $scope.time+=1;
-        else{
-          $scope.$on("$destroy", function(){
-            $interval.cancel(timer);
-            $scope.timer = undefined;
-          });
-        }
-      }, 1000);
+      startTimer();
     }
 
     $scope.ShowSolution = function () {
@@ -133,6 +124,7 @@
       */
       if(gameOver()){
         $scope.end = true;
+        angular.element('#gameOverModal').modal('open');
       }
     }
 
@@ -150,8 +142,15 @@
       $scope.name = '';
       $scope.size = 4;
       $scope.guides = false;
+      stopTimer();  
+      $scope.time = 0;
+      $scope.end = false;
       angular.element('#newGameModal').modal('open');
     }
+
+    $scope.$on('$destroy', function() {
+      stopTimer();
+    });
 
     function darken(x, y) {
       let tile = angular.element('td.chessboard#'+x+'-'+y);
@@ -199,5 +198,24 @@
       return true;
     }
 
+    function startTimer(){
+      if(angular.isDefined($scope.timer))
+        return;
+
+      $scope.timer = $interval(function(){
+        if(!$scope.end)
+          $scope.time+=1;
+        else
+          stopTimer();
+      }, 1000);    
+    }
+
+    function stopTimer(){
+      if(angular.isDefined($scope.timer)){
+        $interval.cancel($scope.timer);
+        $scope.timer = undefined;
+      }
+    }
   }
+  
 })();

@@ -168,5 +168,22 @@
         </div>
       </div>
     </div>
+
+    <div id="gameOverModal" class="modal">
+      <div class="modal-content center">
+        <div class="row">
+          <h4 class="game">You Win!</h4>
+        </div>
+        <div class="row">
+          <h5>Your time is <span style="color:#4AC232">{{time}}</span></h5>
+        </div>
+        <div class="row">
+          <a ng-click="new()" class="btn waves-effect waves-light game pulse">
+            Play Again?
+          </a>
+        </div>
+      </div>
+    </div>
+    
   </body>
 </html>
