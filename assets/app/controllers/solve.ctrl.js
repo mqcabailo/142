@@ -37,6 +37,7 @@
               $scope.puzzles = Utils.solve(lines);
               $('.modal').modal('close');
               $scope.generatingSolutions = false;
+              $scope.inputFile = null;
             }, 1000);
           }
           else{

@@ -4,11 +4,10 @@ html{
 
 body#main{
   height: 100%;
-  flex: 1 0 auto;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
   background: url('../img/bg3.gif') no-repeat center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
 }
 
@@ -28,9 +27,13 @@ h1.game {
     2px 2px 0 #E6E4E1;
 }
 
+div.gameFile {
+  background-color: #5F5547 !important;
+}
+
 a.game {
   font-family: 'Press Start 2P', cursive;
-  background-color: #5F5547;
+  background-color: #5F5547 !important;
 }
 
 a.game:hover {
