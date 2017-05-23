@@ -24,11 +24,12 @@
     };
   }]);
 
-  PlayCtrl.$inject = ['$scope', 'Utils', 'FileReader', '$timeout', 'BackTrack', '$interval'];
+  PlayCtrl.$inject = ['$scope', 'Utils', 'FileReader', '$timeout', 'BackTrack', '$interval', '$http'];
 
-  function PlayCtrl($scope, Utils, FileReader, $timeout, BackTrack, $interval) {
+  function PlayCtrl($scope, Utils, FileReader, $timeout, BackTrack, $interval, $http) {
     angular.element('.modal').modal();
     angular.element('.tap-target').tapTarget('open');
+    getScores()
 
     /******************************************************
     * Scope Variables
@@ -40,6 +41,7 @@
     $scope.guides = false;
     $scope.timer;
     $scope.time = 0;
+    $scope.scores;
     $scope.end = false;
     $scope.boardHTML = '';
     $scope.solutionHTML = '';
@@ -123,6 +125,7 @@
         Check here if player has won, get time
       */
       if(gameOver()){
+
         $scope.end = true;
         angular.element('#gameOverModal').modal('open');
       }
@@ -215,6 +218,28 @@
         $interval.cancel($scope.timer);
         $scope.timer = undefined;
       }
+    }
+
+    function uploadFile(file){
+      $http.post("http://localhost:8000/", JSON.stringify(file), {
+        transformRequest: angular.identity,
+        headers: {'Content-Type': undefined},
+        withCredentials: true
+      })
+    }
+
+    function getScores(){
+      $http.get("http://localhost:8000/score.json", {
+        withCredentials: true
+      }).then(success, error);
+
+      function success(response){
+        $scope.scores = response.data;
+      };
+
+      function error(response){
+        console.log(response.data);
+      };
     }
   }
   
