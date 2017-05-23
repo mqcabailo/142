@@ -29,7 +29,6 @@
   function PlayCtrl($scope, Utils, FileReader, $timeout, BackTrack, $interval, $http) {
     angular.element('.modal').modal();
     angular.element('.tap-target').tapTarget('open');
-    getScores()
 
     /******************************************************
     * Scope Variables
@@ -54,6 +53,7 @@
         Materialize.toast('Please enter your name!', 3000);
         return;
       }
+      getScores();
 
       $scope.playerName = name;
       $scope.puzzle = BackTrack.NewBoard(size);
@@ -125,7 +125,8 @@
         Check here if player has won, get time
       */
       if(gameOver()){
-
+        updateScores();
+        console.log($scope.scores);
         $scope.end = true;
         angular.element('#gameOverModal').modal('open');
       }
@@ -241,6 +242,37 @@
         console.log(response.data);
       };
     }
+
+    function updateScores(){
+      var tempName1, tempScore1, tempName2, tempScore2, index = -1;
+      
+      for(var i = 1; i <= 5; i++){
+        if($scope.scores[$scope.puzzle.length][i].score > $scope.time){
+          index = i;
+          tempName1 = $scope.scores[$scope.puzzle.length][i].name;
+          tempScore1 = $scope.scores[$scope.puzzle.length][i].score;
+          $scope.scores[$scope.puzzle.length][i].name = $scope.name;
+          $scope.scores[$scope.puzzle.length][i].score = $scope.time;
+          uploadFile($scope.scores);
+          break;
+        }
+      }
+
+      if(index != -1){
+        for(var i = index+1; i <= 5; i++){
+          tempName2 = $scope.scores[$scope.puzzle.length][i].name;
+          tempScore2 = $scope.scores[$scope.puzzle.length][i].score;
+
+          $scope.scores[$scope.puzzle.length][i].name = tempName1;
+          $scope.scores[$scope.puzzle.length][i].score = tempScore1;
+
+          tempName1 = tempName2;
+          tempScore1 = tempScore2;
+        }
+      }
+    }
   }
+
+
   
 })();
