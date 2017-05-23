@@ -41,6 +41,7 @@
     $scope.timer;
     $scope.time = 0;
     $scope.scores;
+    $scope.highScoreNotif;
     $scope.end = false;
     $scope.boardHTML = '';
     $scope.solutionHTML = '';
@@ -126,7 +127,6 @@
       */
       if(gameOver()){
         updateScores();
-        console.log($scope.scores);
         $scope.end = true;
         angular.element('#gameOverModal').modal('open');
       }
@@ -138,7 +138,7 @@
           return;
         }
       }
-      
+      angular.element('#highScoresModal').modal('close');
       angular.element('form').get(0).reset();
       $scope.solutionHTML = '';
       $scope.puzzle = [];
@@ -148,8 +148,14 @@
       $scope.guides = false;
       stopTimer();  
       $scope.time = 0;
+      $scope.highScoreNotif = null;
       $scope.end = false;
       angular.element('#newGameModal').modal('open');
+    }
+
+    $scope.viewHighScores = function () {
+      angular.element('#gameOverModal').modal('close');
+      angular.element('#highScoresModal').modal('open');
     }
 
     $scope.$on('$destroy', function() {
@@ -253,6 +259,7 @@
           tempScore1 = $scope.scores[$scope.puzzle.length][i].score;
           $scope.scores[$scope.puzzle.length][i].name = $scope.name;
           $scope.scores[$scope.puzzle.length][i].score = $scope.time;
+          $scope.highScoreNotif = 'You scored a HIGHSCORE!';
           uploadFile($scope.scores);
           break;
         }

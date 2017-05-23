@@ -176,6 +176,41 @@
         </div>
         <div class="row">
           <h5>Your time is <span style="color:#4AC232">{{time}}</span></h5>
+          <span>{{highScoreNotif}}</span>
+        </div>
+        <div class="row">
+          <a ng-click="new()" class="btn waves-effect waves-light game pulse">
+            Play Again?
+          </a>
+          <br/>
+          <br/>
+          <a ng-click="viewHighScores()" class="btn waves-effect waves-light game">
+            View HighScores
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="highScoresModal" class="modal">
+      <div class="modal-content center">
+        <div class="row">
+          <div class="row">
+            <h5 class="game">High Scores</h5>
+            <table class="striped centered">
+              <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="score in scores[puzzle.length]">
+                  <td>{{score.name}}</td>
+                  <td>{{score.score}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="row">
           <a ng-click="new()" class="btn waves-effect waves-light game pulse">

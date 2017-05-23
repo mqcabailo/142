@@ -17,7 +17,6 @@ class ServerHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_POST(self):
         length = self.headers['content-length']
         data = self.rfile.read(int(length))
-        logging.debug(data)
 
         with open('score.json', 'w+') as fh:
             fh.write(data.decode())
